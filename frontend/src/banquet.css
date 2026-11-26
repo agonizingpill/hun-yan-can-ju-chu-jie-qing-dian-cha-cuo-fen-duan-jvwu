@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap');
+:root {
+  --ink:oklch(29% .039 337); --soft:oklch(46% .045 332); --paper:oklch(95% .028 35);
+  --sheet:oklch(97% .019 36); --tint:oklch(91% .044 20); --line:oklch(78% .064 23);
+  --accent:oklch(44% .092 343); --button-text:oklch(97% .02 39);
+  --body:'Noto Sans SC','PingFang SC',sans-serif; --heading:var(--body); --mono:'DM Mono',monospace;
+}
+.top { background:var(--accent); color:var(--sheet); }
+.shell { margin:auto; max-width:1580px; }
+.kicker,.mono { font-family:var(--mono),var(--body); }
+.split { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(285px,.85fr); gap:18px; align-items:start }
+.split.reverse { grid-template-columns:minmax(285px,.85fr) minmax(0,1.5fr) }
+.action form { display:grid; gap:9px; margin-top:10px }
+.action button { justify-self:start }
+.pill { font-size:.78rem; width:fit-content; background:var(--tint); padding:.2rem .46rem; white-space:nowrap; }
+.pill[data-state=locked],.pill[data-state=open] { color:oklch(42% .13 34); }
+.pill[data-state=closed],.pill[data-state=cleared],.pill[data-state=resolved] { color:oklch(42% .084 156); }
+.floor { display:grid; gap:10px; margin-bottom:16px }
+.table-seat { border:1px solid var(--line); padding:10px; display:grid; grid-template-columns:60px 1fr 85px; align-items:center; gap:12px }
+.table-seat i { display:grid; place-items:center; font:600 1rem var(--mono); border:1px solid var(--accent); border-radius:50%; width:50px; height:50px; color:var(--accent); background:var(--tint); }
+.table-seat p { margin:0 }
+.tray { border-bottom:1px dashed var(--line); padding-block:9px; }
+.tray details { margin-top:5px }
+.cutline { display:grid; grid-template-columns:repeat(3,1fr); margin:12px 0; border:1px solid var(--line); }
+.cutline div { border-right:1px solid var(--line); padding:10px 5px; text-align:center; }
+.cutline div:last-child { border-right:0 }
+.cutline strong { display:block; font:500 clamp(.9rem,2vw,1.65rem) var(--mono); }
+.result { border-top:3px solid var(--accent); padding-top:10px; margin-top:14px; animation:entry .25s both; }
+.votes { display:grid; grid-template-columns:100px 1fr 52px; gap:5px; margin-block:12px; }
+.votes meter { width:100%; accent-color:var(--accent) }
+.ticket { border:1px solid var(--line); margin-bottom:8px; padding:8px; }
+.callout { border-left:3px solid var(--accent); padding:8px; background:var(--tint); margin:10px 0; }
+.welcome .title { background:var(--accent); color:var(--sheet); min-height:220px; padding:1.7rem; display:grid; align-content:center; }
+.welcome .kicker,.welcome .intro { color:var(--sheet); }
+@media(max-width:1000px) { .split,.split.reverse { grid-template-columns:1fr; } }
