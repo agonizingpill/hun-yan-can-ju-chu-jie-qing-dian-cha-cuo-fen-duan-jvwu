@@ -1,4 +1,6 @@
-from sqlalchemy import CheckConstraint, Column, Float, ForeignKey, Integer, JSON, String, Table
+from datetime import datetime, timezone
+
+from sqlalchemy import CheckConstraint, Column, DateTime, Float, ForeignKey, Integer, JSON, String, Table
 from core.db import metadata
 
 counts = Table(
@@ -12,6 +14,7 @@ counts = Table(
     Column('edge_overlap',Float,nullable=False),
     Column('handoff_gap',Float,nullable=False),
     Column('model_segment',String(18),nullable=False),
+    Column('model_version',String(40),nullable=False),
     Column('votes',JSON,nullable=False),
     Column('missing',Integer,nullable=False),
     Column('compute_token',String(32),nullable=False,unique=True),
@@ -32,8 +35,13 @@ issues = Table(
     Column('responsible_name',String(48)),
     Column('released_count',Integer),
     Column('resolved_by',String(80)),
+    Column('label_revised_at',DateTime),
     CheckConstraint("category IN ('label_conflict','count_loss')"),
     CheckConstraint("state IN ('open','assigned','resolved')"),
     CheckConstraint("(frame_code IS NULL AND conflicting_table IS NOT NULL) OR "
                     "(frame_code IS NOT NULL AND conflicting_table IS NULL)"),
 )
+
+
+def now():
+    return datetime.now(timezone.utc)

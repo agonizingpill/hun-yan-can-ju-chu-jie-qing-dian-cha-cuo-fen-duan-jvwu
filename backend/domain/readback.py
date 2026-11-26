@@ -15,8 +15,9 @@ def one(conn,table,code,lock=False):
     return dict(row)
 
 
-def all_rows(conn,table,*filters):
-    query=select(table).where(*filters).order_by(table.c.code.desc()).limit(100)
+def all_rows(conn,table,*filters,order=None):
+    column = table.c[order] if order else table.c.code
+    query=select(table).where(*filters).order_by(column.desc()).limit(100)
     return [dict(row) for row in conn.execute(query).mappings()]
 
 

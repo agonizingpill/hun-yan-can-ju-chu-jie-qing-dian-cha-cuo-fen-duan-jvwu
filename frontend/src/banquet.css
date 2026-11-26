@@ -15,6 +15,10 @@
 .pill { font-size:.78rem; width:fit-content; background:var(--tint); padding:.2rem .46rem; white-space:nowrap; }
 .pill[data-state=locked],.pill[data-state=open] { color:oklch(42% .13 34); }
 .pill[data-state=closed],.pill[data-state=cleared],.pill[data-state=resolved] { color:oklch(42% .084 156); }
+.pill[data-state=active] { color:oklch(40% .12 158); font-weight:700; }
+.pill[data-state=invalid],.pill[data-state=rejected] { color:oklch(42% .16 27); }
+.pill[data-state=superseded] { color:var(--soft); }
+.pill[data-state=training],.pill[data-state=evaluated] { color:oklch(45% .11 75); }
 .floor { display:grid; gap:10px; margin-bottom:16px }
 .table-seat { border:1px solid var(--line); padding:10px; display:grid; grid-template-columns:60px 1fr 85px; align-items:center; gap:12px }
 .table-seat i { display:grid; place-items:center; font:600 1rem var(--mono); border:1px solid var(--accent); border-radius:50%; width:50px; height:50px; color:var(--accent); background:var(--tint); }

@@ -43,3 +43,8 @@ class Inspection(Input):
     correctly_labeled_table: Code
     witnessed_tag: Code
     counted: Count
+
+
+class Revision(Input):
+    segment: Segment
+    person: Annotated[str,StringConstraints(strip_whitespace=True,min_length=2,max_length=48)]

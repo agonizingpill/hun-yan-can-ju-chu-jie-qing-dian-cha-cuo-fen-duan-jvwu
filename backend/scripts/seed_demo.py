@@ -1,8 +1,11 @@
 import json
 from sqlalchemy import func, select
 
+from core.config import SEED_DEMO
 from core.db import transaction
 from domain.demo import FIXTURES
+
+REVIEWER = {'sub': 'reviewer@demo.test', 'role': 'reviewer'}
 
 def seed():
     sizes = {}
@@ -13,6 +16,10 @@ def seed():
                 if present is None:
                     conn.execute(table.insert().values(**row))
             sizes[table.name] = conn.scalar(select(func.count()).select_from(table))
+    if SEED_DEMO:
+        # 备齐跨三个婚宴、覆盖三个缺件段的已结案人工归责样本，供模型治理演示。
+        from domain.demo_governance import seed_governance_demo
+        sizes['governance_demo'] = seed_governance_demo(REVIEWER)
     return sizes
 
 if __name__ == '__main__':

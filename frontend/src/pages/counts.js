@@ -11,16 +11,21 @@ export async function counts(root,role) {
   const entry=el('section',{class:'action'});
   const statement=el('section',{class:'ledger'});
   async function load(message) {
-    const [layout,records]=await Promise.all([room.layout(),room.counts()]);
+    const [layout,records,active]=await Promise.all([room.layout(),room.counts(),room.activeModel()]);
     const assignments=layout.placements.filter(line=>layout.cases.find(item=>item.code===line.case_code)?.state==='at_table');
     const output=el('div',{class:'result'});
     entry.replaceChildren(el('h2',{},'计数证据'),message?status(message,'ok'):null);
-    statement.replaceChildren(el('h2',{},'分段判别与清点单'),output,
+    statement.replaceChildren(
+      el('h2',{},'分段判别与清点单'),
+      el('p',{class:'callout mono'},'当前给新单使用的模型版本：'+active.active_version
+        +'（已排队的清点按领号时钉住的版本算）'),
+      output,
       records.length ? records.map(item=>{
         const link=layout.placements.find(line=>line.code===item.placement_code);
         return el('details',{class:'ticket'},el('summary',{},item.code+' · '+(link?.case_code || item.placement_code)
           +' · '+item.missing+' 缺件'),portion([link?.outbound_count,item.table_count,item.return_count]),
-          pill(segments,item.model_segment),probability(item.votes));
+          pill(segments,item.model_segment),probability(item.votes),
+          el('p',{class:'mono'},'领号版本：'+(item.model_version || '未记录')));
       }):status('清点签入后显示现场读数和票比。'));
     if(!mayWrite(role)||!assignments.length) {
       entry.append(status('可清点的箱须先签收且没有差错锁。'));
